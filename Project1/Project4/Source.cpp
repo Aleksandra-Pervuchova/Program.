@@ -2,7 +2,7 @@
 using namespace std;
 int main()
 {
-	int x, i, j, k=0;
+	int x, i, j, k = 0;
 	cin >> x;
 	for (i = 2; i <= x; ++i)
 	{
@@ -13,9 +13,9 @@ int main()
 				++k;
 			}
 		}
-		if (k ==1)
+		if (k == 1)
 		{
-			cout << i<< " ";
+			cout << i << " ";
 		}
 		k = 0;
 	}

@@ -5,7 +5,7 @@ int main()
 	int k = 1, a, b;
 	cin >> a;
 	cin >> b;
-	while (b*k <= a)
+	while (b * k <= a)
 	{
 		++k;
 	}
