@@ -3,14 +3,14 @@ using namespace std;
 
 void printMenu()
 {
-	setlocale(LC_ALL, "Russian");
-	cout << "Меню\n0 - Выход из программы\n"
-		<< "1 - Добавить число в массив\n"
-		<< "2 - Вывести массив на экран\n"
-		<< "3 - Найти номер максимального элемента массива \n"
-		<< "4 - Найти минимальный элемент массива \n"
-		<< "5 - Посчитать сумму элементов массива\n"
-		<< "6 - Вывести массив в оратном порядке" << endl;
+	cout << "МЕНЮ" << endl;
+	cout << "0 - Выход из программы" << endl;
+	cout << "1 - Добавить число в массив" << endl;
+	cout << "2 - Вывести массив на экран" << endl;
+	cout << "3 - Найти номер максимального элемента массива" << endl;
+	cout << "4 - Найти минимальный элемент массива" << endl;
+	cout << "5 - Посчитать сумму элементов массива" << endl;
+	cout << "6 - Вывести массив в оратном порядке" << endl;
 }
 void expandArray(int*& arr, int& capacity)
 {
@@ -25,15 +25,14 @@ void expandArray(int*& arr, int& capacity)
 	capacity = newCapacity;
 }
 
-int inputElement(int*& arr, int& capacity, int& count)
+int addElement(int*& arr, int& capacity, int& count, int element)
 {
-	int x;
-	cin >> x;
+	cin >> element;
 	if (count == capacity)
 	{
 		expandArray(arr, capacity);
 	}
-	arr[count] = x;
+	arr[count] = element;
 	count++;
 	return 0;
 }
@@ -49,7 +48,7 @@ void printArray(int*& arr, int& count, int& capacity)
 }
 
 
-void printReverseArray(int*& arr, int& count, int& capacity)
+void reversePrintArray(int*& arr, int& count, int& capacity)
 {
 	cout << "[" << count << "/" << capacity << "]{";
 	for (int i = count - 1; i >= 0; --i)
@@ -74,18 +73,18 @@ int minElement(int*& arr, int& count)
 }
 
 
-int numberMaxElement(int*& arr, int& count)
+int maxIndex(int*& arr, int& count)
 {
-	int numbermax = 0;
+	int maxindex = 0;
 	for (int i = 1; i < count; ++i)
 	{
-		if (arr[i] > arr[numbermax])
+		if (arr[i] > arr[maxindex])
 		{
-			numbermax = i;
+			maxindex = i;
 		}
 	}
-	cout << "numbermax = " << numbermax << endl;
-	return numbermax;
+	cout << "maxindex = " << maxindex << endl;
+	return 0;
 }
 
 
@@ -99,24 +98,18 @@ int sumArray(int*& arr, int& count)
 	return sum;
 }
 
-void processChoice(int*& arr, int& capacity, int& count)
+void processChoice(int*& arr, int& capacity, int& count, int choice, int& element)
 {
-	int choice = -1;
-	while (choice != 0)
-	{
-		system("cls");
-		printMenu();
-		cin >> choice;
-		switch (choice)
+	    switch (choice)
 		{
 		case 1:
-			inputElement(arr, capacity, count);
+			addElement(arr, capacity, count, element);
 			break;
 		case 2:
 			printArray(arr, count, capacity);
 			break;
 		case 3:
-			numberMaxElement(arr, count);
+			maxIndex(arr, count);
 			break;
 		case 4:
 			minElement(arr, count);
@@ -125,18 +118,27 @@ void processChoice(int*& arr, int& capacity, int& count)
 			cout << "sum = " << sumArray(arr, count) << endl;
 			break;
 		case 6:
-			printReverseArray(arr, count, capacity);
+			reversePrintArray(arr, count, capacity);
 			break;
 		}
-		system("pause");
-	}
 }
 
 int main(int argc, char* argv[])
 {
+	setlocale(LC_ALL, "Russian");
+	int choice = 0;
 	int capacity = 5;
-	int* arr = new int[capacity];
 	int count = 0;
-	processChoice(arr, capacity, count);
+	int element;
+	int* arr = new int[capacity];
+	do
+	{
+		system("cls");
+		printMenu();
+		cin >> choice;
+		processChoice(arr, capacity, count, choice, element);
+		system("pause");
+	} while (choice != 0);
+	delete[] arr;
 	return 0;
 }
