@@ -5,14 +5,14 @@ using namespace std;
 
 void printMenu()
 {
-	setlocale(LC_ALL, "Russian");
-	cout << "Меню\n0 - Выход из программы\n"
-		<< "1 - Добавить в массив n случайных чисел в промежутке от a до b (n, a, b вводится с клавиатуры)\n"
-		<< "2 - Развернуть массив\n"
-		<< "3 - Поменять элементы массива местами в парах. Если число элементов нечетно, последний элемент остается на своем месте\n"
-		<< "4 - Циклический сдвиг вправо на 1\n"
-		<< "5 - Развернуть две половинки массива. m - индекс элемента, разделяющего  две половинки\n"
-		<< "6 - Вывести массив на экран" << endl;
+	cout << "Меню" << endl;
+	cout << "0 - Выход из программы" << endl;
+	cout << "1 - Добавить в массив n случайных чисел в промежутке от a до b (n, a, b вводится с клавиатуры)" << endl;
+	cout << "2 - Развернуть массив" << endl;
+	cout << "3 - Поменять элементы массива местами в парах. Если число элементов нечетно, последний элемент остается на своем месте" << endl;
+	cout << "4 - Циклический сдвиг вправо на 1" << endl;
+	cout << "5 - Развернуть две половинки массива. m - индекс элемента, разделяющего  две половинки" << endl;
+	cout << "6 - Вывести массив на экран" << endl;
 }
 
 void expandArray(int*& arr, int& capacity)
@@ -38,7 +38,7 @@ void printArray(int*& arr, int& count, int& capacity)
 	cout << "}" << endl;
 }
 
-int random(int& capacity, int*& arr, int& count, int n, int a, int b)
+int addRandomElements(int& capacity, int*& arr, int& count, int n, int min, int max)
 {
 	for (int i = 1; i <= n; ++i)
 	{
@@ -46,13 +46,13 @@ int random(int& capacity, int*& arr, int& count, int n, int a, int b)
 		{
 			expandArray(arr, capacity);
 		}
-		arr[count] = a + rand() % (b - a + 1);
+		arr[count] = min + rand() % (max - min + 1);
 		count++;
 	}
 	return 0;
 }
 
-void reverse(int*& arr, int& capacity, int& count)
+void reverseArray(int*& arr, int& capacity, int& count)
 {
 	int* temp = new int[capacity];
 	for (int i = 0; i < count; ++i)
@@ -63,7 +63,7 @@ void reverse(int*& arr, int& capacity, int& count)
 	arr = temp;
 }
 
-void pairChange(int& capacity, int& count, int*& arr)
+void swapPairsArray(int& capacity, int& count, int*& arr)
 {
 	int* temp = new int[capacity];
 	for (int i = 0; i < count - 1; i += 2)
@@ -79,13 +79,13 @@ void pairChange(int& capacity, int& count, int*& arr)
 	arr = temp;
 }
 
-void shift(int& capacity, int& count, int*& arr)
+void shiftArray(int& capacity, int& count, int*& arr)
 {
 	int* temp = new int[capacity];
 	for (int i = 1; i < count; ++i)
 	{
 		temp[i] = arr[i - 1];
-	};
+	}
 	temp[0] = arr[count - 1];
 	delete[] arr;
 	arr = temp;
@@ -93,68 +93,66 @@ void shift(int& capacity, int& count, int*& arr)
 
 
 
-void reversalHalf(int& count, int& capacity, int*& arr, int n)
+void shiftPartsArray(int& count, int& capacity, int*& arr, int m)
 {
 	int* temp = new int[capacity];
-	for (int i = 0; i < n; ++i)
+	for (int i = 0; i < m; ++i)
 	{
-		temp[i] = arr[n - i - 1];
+		temp[i] = arr[m - i - 1];
 	}
-	for (int i = n + 1; i < count; ++i)
+	for (int i = m + 1; i < count; ++i)
 	{
-		temp[i] = arr[count - (i - n)];
+		temp[i] = arr[count - (i - m)];
 	}
-	temp[n] = arr[n];
+	temp[m] = arr[m];
 	delete[] arr;
 	arr = temp;
 }
 
-void processChoice(int*& arr, int& capacity, int& count)
+void processChoice(int*& arr, int& capacity, int& count, int choice, int& m, int& min, int& max, int& n)
 {
-	int choice = -1;
-	int m, n, a, b;
-	while (choice != 0)
-	{
-		system("cls");
-		printMenu();
-		cin >> choice;
 		switch (choice)
 		{
 		case 1:
 			cout << "Введите значения n, a, b" << endl;
-			cin >> n >> a >> b;
-			random(capacity, arr, count, n, a, b);
+			cin >> n >> min >> max;
+			addRandomElements(capacity, arr, count, n, min, max);
 			break;
 		case 2:
-			reverse(arr, capacity, count);
+			reverseArray(arr, capacity, count);
 			break;
 		case 3:
-			pairChange(capacity, count, arr);
+			swapPairsArray(capacity, count, arr);
 			break;
 		case 4:
-			shift(capacity, count, arr);
+			shiftArray(capacity, count, arr);
 			break;
 		case 5:
 			cout << " Введите индекс элемента, разделяющего половинки массива" << endl;
 			cin >> m;
-			if (m >= count)
-			{
-				cout << "Ошибка: нет элементов с таким индексом" << endl;
-				break;
-			}
-			reversalHalf(count, capacity, arr, n);
+			shiftPartsArray(count, capacity, arr, n);
 			break;
 		case 6:
 			printArray(arr, count, capacity);
 		}
-		system("pause");
-	}
 }
 
 int main(int argc, char* argv[])
 {
+	setlocale(LC_ALL, "Russian");
+	int m, n, min, max;
+	int choice = 0;
 	int capacity = 5;
 	int* arr = new int[capacity];
 	int count = 0;
-	processChoice(arr, capacity, count);
+	do
+	{
+		system("cls");
+		printMenu();
+		cin >> choice;
+		processChoice(arr, capacity, count, choice, m, min, max, n);
+		system("pause");
+	} while (choice != 0);
+	delete[] arr;
+	return 0;
 }
