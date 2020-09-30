@@ -25,16 +25,14 @@ void expandArray(int*& arr, int& capacity)
 	capacity = newCapacity;
 }
 
-int addElement(int*& arr, int& capacity, int& count, int element)
+void addElement(int*& arr, int& capacity, int& count, int element)
 {
-	cin >> element;
 	if (count == capacity)
 	{
 		expandArray(arr, capacity);
 	}
 	arr[count] = element;
 	count++;
-	return 0;
 }
 
 void printArray(int*& arr, int& count, int& capacity)
@@ -68,7 +66,6 @@ int minElement(int*& arr, int& count)
 			min = arr[i];
 		}
 	}
-	cout << "min = " << min << endl;
 	return min;
 }
 
@@ -83,8 +80,7 @@ int maxIndex(int*& arr, int& count)
 			maxindex = i;
 		}
 	}
-	cout << "maxindex = " << maxindex << endl;
-	return 0;
+	return maxindex;
 }
 
 
@@ -98,21 +94,23 @@ int sumArray(int*& arr, int& count)
 	return sum;
 }
 
-void processChoice(int*& arr, int& capacity, int& count, int choice, int& element)
+void processChoice(int*& arr, int& capacity, int& count, int& choice)
 {
+	int element;
 	    switch (choice)
 		{
 		case 1:
+			cin >> element;
 			addElement(arr, capacity, count, element);
 			break;
 		case 2:
 			printArray(arr, count, capacity);
 			break;
 		case 3:
-			maxIndex(arr, count);
+			cout << "maxindex = " << maxIndex(arr, count) << endl;
 			break;
 		case 4:
-			minElement(arr, count);
+			cout << "min = " << minElement(arr, count) << endl;
 			break;
 		case 5:
 			cout << "sum = " << sumArray(arr, count) << endl;
@@ -129,14 +127,13 @@ int main(int argc, char* argv[])
 	int choice = 0;
 	int capacity = 5;
 	int count = 0;
-	int element;
 	int* arr = new int[capacity];
 	do
 	{
 		system("cls");
 		printMenu();
 		cin >> choice;
-		processChoice(arr, capacity, count, choice, element);
+		processChoice(arr, capacity, count, choice);
 		system("pause");
 	} while (choice != 0);
 	delete[] arr;

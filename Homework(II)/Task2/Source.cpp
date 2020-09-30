@@ -38,7 +38,7 @@ void printArray(int*& arr, int& count, int& capacity)
 	cout << "}" << endl;
 }
 
-int addRandomElements(int& capacity, int*& arr, int& count, int n, int min, int max)
+void addRandomElements(int& capacity, int*& arr, int& count, int n, int min, int max)
 {
 	for (int i = 1; i <= n; ++i)
 	{
@@ -49,68 +49,65 @@ int addRandomElements(int& capacity, int*& arr, int& count, int n, int min, int 
 		arr[count] = min + rand() % (max - min + 1);
 		count++;
 	}
+}
+
+void reverseArray(int*& arr, int& count)
+{
+	int temp;
+	for (int i = 0; i <= count / 2 ; ++i)
+	{
+		temp = arr[i];
+		arr[i] = arr[count - 1 - i];
+		arr[count - 1 - i] = temp;
+	}
+}
+
+int swapPairsArray(int*& arr, int& count)
+{
+	int temp;
+	for (int i = 0; i < count - 1; i += 2)
+	{
+		temp = arr[i];
+		arr[i] = arr[i + 1];
+		arr[i + 1] = temp;
+	}
 	return 0;
 }
 
-void reverseArray(int*& arr, int& capacity, int& count)
+int shiftArray(int*& arr, int& count)
 {
-	int* temp = new int[capacity];
-	for (int i = 0; i < count; ++i)
+	int temp = arr[count - 1];
+	for (int i = count - 1; i > 0; --i)
 	{
-		temp[i] = arr[count - 1 - i];
+		arr[i] = arr[i - 1];
 	}
-	delete[] arr;
-	arr = temp;
-}
-
-void swapPairsArray(int& capacity, int& count, int*& arr)
-{
-	int* temp = new int[capacity];
-	for (int i = 0; i < count - 1; i += 2)
-	{
-		temp[i] = arr[i + 1];
-		temp[i + 1] = arr[i];
-	}
-	if (count % 2 != 0)
-	{
-		temp[count - 1] = arr[count - 1];
-	}
-	delete[] arr;
-	arr = temp;
-}
-
-void shiftArray(int& capacity, int& count, int*& arr)
-{
-	int* temp = new int[capacity];
-	for (int i = 1; i < count; ++i)
-	{
-		temp[i] = arr[i - 1];
-	}
-	temp[0] = arr[count - 1];
-	delete[] arr;
-	arr = temp;
+	arr[0] = temp;
+	return 0;
 }
 
 
 
-void shiftPartsArray(int& count, int& capacity, int*& arr, int m)
+int shiftPartsArray(int*& arr, int& count, int m)
 {
-	int* temp = new int[capacity];
-	for (int i = 0; i < m; ++i)
+	int temp;
+	for (int i = 0; i <= m / 2; ++i)
 	{
-		temp[i] = arr[m - i - 1];
+		temp = arr[i];
+		arr[i] = arr[m - i - 1];
+		arr[m - i - 1] = temp;
 	}
-	for (int i = m + 1; i < count; ++i)
+	for (int i = m + 1; i <= (count + m) / 2; ++i)
 	{
-		temp[i] = arr[count - (i - m)];
+		temp = arr[i];
+		arr[i] = arr[count - (i - m)];
+		arr[count - (i - m)] = arr[temp];
 	}
-	temp[m] = arr[m];
-	delete[] arr;
-	arr = temp;
+	return 0;
 }
 
-void processChoice(int*& arr, int& capacity, int& count, int choice, int& m, int& min, int& max, int& n)
+void processChoice(int*& arr, int& capacity, int& count, int choice)
 {
+	int n, min, max, m;
 		switch (choice)
 		{
 		case 1:
@@ -119,18 +116,18 @@ void processChoice(int*& arr, int& capacity, int& count, int choice, int& m, int
 			addRandomElements(capacity, arr, count, n, min, max);
 			break;
 		case 2:
-			reverseArray(arr, capacity, count);
+			reverseArray(arr, count);
 			break;
 		case 3:
-			swapPairsArray(capacity, count, arr);
+			swapPairsArray( arr, count);
 			break;
 		case 4:
-			shiftArray(capacity, count, arr);
+			shiftArray(arr, count);
 			break;
 		case 5:
 			cout << " ¬ведите индекс элемента, раздел€ющего половинки массива" << endl;
 			cin >> m;
-			shiftPartsArray(count, capacity, arr, n);
+			shiftPartsArray(arr, count, m);
 			break;
 		case 6:
 			printArray(arr, count, capacity);
@@ -140,17 +137,16 @@ void processChoice(int*& arr, int& capacity, int& count, int choice, int& m, int
 int main(int argc, char* argv[])
 {
 	setlocale(LC_ALL, "Russian");
-	int m, n, min, max;
 	int choice = 0;
 	int capacity = 5;
-	int* arr = new int[capacity];
 	int count = 0;
+	int* arr = new int[capacity];
 	do
 	{
 		system("cls");
 		printMenu();
 		cin >> choice;
-		processChoice(arr, capacity, count, choice, m, min, max, n);
+		processChoice(arr, capacity, count, choice);
 		system("pause");
 	} while (choice != 0);
 	delete[] arr;
