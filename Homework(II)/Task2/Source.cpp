@@ -54,7 +54,7 @@ void addRandomElements(int& capacity, int*& arr, int& count, int n, int min, int
 void reverseArray(int*& arr, int& count)
 {
 	int temp;
-	for (int i = 0; i <= count / 2 ; ++i)
+	for (int i = 0; i < count / 2 ; ++i)
 	{
 		temp = arr[i];
 		arr[i] = arr[count - 1 - i];
@@ -90,17 +90,17 @@ int shiftArray(int*& arr, int& count)
 int shiftPartsArray(int*& arr, int& count, int m)
 {
 	int temp;
-	for (int i = 0; i <= m / 2; ++i)
+	for (int i = 0; i < m / 2; ++i)
 	{
 		temp = arr[i];
 		arr[i] = arr[m - i - 1];
 		arr[m - i - 1] = temp;
 	}
-	for (int i = m + 1; i <= (count + m) / 2; ++i)
+	for (int i = m + 1; i < (count + m) / 2; ++i)
 	{
 		temp = arr[i];
 		arr[i] = arr[count - (i - m)];
-		arr[count - (i - m)] = arr[temp];
+		arr[count - (i - m)] = temp;
 	}
 	return 0;
 }
