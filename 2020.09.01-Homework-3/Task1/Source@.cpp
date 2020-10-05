@@ -158,7 +158,7 @@ int insert(int*& a, int index, int element)
     }
 }
 
-int deleteGroup(int* a, int startIndex, int count)
+int deleteGroup(int*& a, int startIndex, int count)
 {
     int k = 0;
     if ((startIndex + count) <= *(a - 2))
@@ -172,6 +172,19 @@ int deleteGroup(int* a, int startIndex, int count)
         {
             *(a + i) = 0;
         }
+
+        *(a - 2) -= count;
+        cout << *(a - 2) << endl;
+        int* temp = initArray(*(a - 1));
+
+        for (int i = 0; i < *(a - 2); ++i)
+        {
+            *(temp + i) = *(a + i);
+        }
+
+        *(temp - 2) = *(a - 2);
+        deleteArray(a);
+        a = temp;
         return 0;
     }
     else
