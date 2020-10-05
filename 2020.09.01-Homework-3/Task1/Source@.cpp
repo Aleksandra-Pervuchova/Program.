@@ -75,17 +75,19 @@ void printArray(int* arr)
 
 int search(int* arr, int element, int start = 0)
 {
+    int flag = 0;
     for (int i = start; i < *(arr - 2); ++i)
     {
-        if (*(arr + i) = element)
+        if (*(arr + i) == element)
         {
             return (start + i);
+            flag = 1;
             break;
         }
-        else
-        {
-            return -1;
-        }
+    }
+    if (flag == 0)
+    {
+        return -1;
     }
 }
 
@@ -99,13 +101,15 @@ void add(int*& arr, int* addedArr)
         }
         *(arr + i + *(arr - 2)) = *(addedArr + i);
     }
+    *(arr - 2) += *(addedArr - 2);
 }
 
 int* unify(int* a, int* b)
 {
-    int* result = new int[*(a - 2) + *(b - 2) + 1]{ 0 };
+    int* result = new int[*(a - 2) + *(b - 2) + 2]{ 0 };
     *result = *(a - 2) + *(b - 2);
-    result += 1;
+    *(result + 1) = *(a - 2) + *(b - 2);
+    result += 2;
     if (*(a - 2) > * (b - 2))
     {
         for (int i = 0; i < *(b - 2); ++i)
@@ -115,7 +119,7 @@ int* unify(int* a, int* b)
         }
         for (int i = 0; i < *(a - 2) - *(b - 2); ++i)
         {
-            *(result + (*(b - 2) * 2) + i) = *(a + *(b - 2) + i);
+            *(result + (*(b - 2)) * 2 + i) = *(a + *(b - 2) + i);
         }
     };
     if (*(b - 2) > * (a - 2))
@@ -154,11 +158,17 @@ int insert(int*& a, int index, int element)
     }
 }
 
-int deleteGroup(int* a, int startIndex, int count = 1)
+int deleteGroup(int* a, int startIndex, int count)
 {
+    int k = 0;
     if ((startIndex + count) <= *(a - 2))
     {
-        for (int i = startIndex; i < startIndex + count; ++i)
+        for (int i = startIndex + count; i < *(a - 2); ++i)
+        {
+            *(a + i - count) = *(a +i);
+            ++k;
+        }
+        for (int i = *(a - 2) - count; i < *(a - 2); ++i)
         {
             *(a + i) = 0;
         }
@@ -175,31 +185,21 @@ int subSequence(int* a, int* b)
     int i = 0, j = 0;
     while (i < *(a - 2))
     {
-        if (*(a + i) == *b)
+        if (*(a + i) == *(b + j))
         {
-            while (j < *(b - 2) - 1)
+            ++j;
+            if (j == *(b - 2))
             {
-                if (*(a + i + j) == *(b + j))
-                {
-                    ++j;
-                }
-                else
-                {
-                    break;
-                }
+                return i - *(b - 2) + 1;
             }
-            if (j == *(b - 2) - 1)
-            {
-                return i;
-                break;
-            }
-            ++i;
         }
+        else
+        {
+            j = 0;
+        }
+        ++i;
     }
-    if (j < (*(b - 2) - 1))
-    {
-        return -1;
-    }
+    return -1;
 }
 
 
@@ -257,7 +257,7 @@ void processChoice(int*& arr1, int*& arr2, int choice)
         cout << "Искомый элемент = ";
         int z = 0;
         cin >> z;
-        search((s == 1 ? arr1 : arr2), z, 0);
+        cout << search((s == 1 ? arr1 : arr2), z, 0);
     }
     break;
     case 5:
@@ -267,10 +267,12 @@ void processChoice(int*& arr1, int*& arr2, int choice)
         cin >> a;
         add((a == 1 ? arr2 : arr1), (a == 1 ? arr1 : arr2));
     }
-    break;
+    break; 
     case 6:
     {
-        unify(arr1, arr2);
+        int* unifyArr = unify(arr1, arr2);
+        printArray(unifyArr);
+        deleteArray(unifyArr);
     }
     break;
     case 7:
@@ -306,9 +308,9 @@ void processChoice(int*& arr1, int*& arr2, int choice)
         cout << "Массив, в котором ищем подпоследовательность ";
         int a = 0;
         cin >> a;
-        subSequence((a == 1 ? arr1 : arr2), (a == 1 ? arr2 : arr1));
+        cout << subSequence((a == 1 ? arr1 : arr2), (a == 1 ? arr2 : arr1)) << endl;
     }
-    break;
+    break; 
     }
 }
 
