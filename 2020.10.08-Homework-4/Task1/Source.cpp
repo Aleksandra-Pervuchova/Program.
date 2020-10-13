@@ -38,7 +38,7 @@ void processChoice(ArrayList& a, int choice)
 	{
 		int x = 0;
 		int i = 0;
-		std::cin >> x >> i;
+		std::cin >> i >> x;
 		a.add(i, x);
 	}
 	break;
@@ -58,11 +58,28 @@ void processChoice(ArrayList& a, int choice)
 	break;
 	case 6:
 	{
-
+		int x = 0;
+		std::cin >> x;
+		while (x != 0)
+		{
+			a.add(x);
+			std::cin >> x;
+		};
 	}
 	break;
 	case 7:
 	{
+		int x = 0;
+		int i = 0;
+		int k = 0;
+		std::cin >> i;
+		std::cin >> x;
+		while (x != 0)
+		{
+			a.add(i + k, x);
+			++k;
+			std::cin >> x;
+		} while (x != 0);
 	}
 	break;
 	}

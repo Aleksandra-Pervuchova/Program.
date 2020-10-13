@@ -53,7 +53,8 @@ bool ArrayList::add(int index, int element)
 		data[i] = data[i - 1];
 	}
 	data[index] = element;
-	if (index > count)
+	++count;
+	if (index >= count)
 	{
 		return false;
 	}
@@ -82,17 +83,26 @@ void ArrayList::print()
 
 bool ArrayList::remove(int index)
 {
-	for (int i = index; i < count; ++i)
+	if (index < count)
 	{
-		data[i] = data[i + 1];
+		for (int i = index; i < count; ++i)
+		{
+			data[i] = data[i + 1];
+		}
+		int* newData = new int[count - 1];
+		for (int i = 0; i < count - 1; ++i)
+		{
+			newData[i] = data[i];
+		}
+		delete[] data;
+		data = newData;
+		--count;
+		return true;
 	}
-	int* newData = new int[count - 1];
-	for (int i = 0; i < count - 1; ++i)
+	else
 	{
-		newData[i] = data[i];
+		return false;
 	}
-	delete[] data;
-	data = newData;
 }
 
 int ArrayList::indexOf(int element)
