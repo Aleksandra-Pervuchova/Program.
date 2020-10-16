@@ -2,7 +2,6 @@
 #include<clocale>
 #include<ctime>
 #include"ArrayList.h"
-
 using namespace std;
 
 void printMenu()
@@ -17,6 +16,7 @@ void printMenu()
 	cout << "6 - Добавить несколько элементов" << endl;
 	cout << "7 - Добавить несколько элементов, начиная с некоторой позиции" << endl;
 }
+
 
 void processChoice(ArrayList& a, int choice)
 {
@@ -58,28 +58,38 @@ void processChoice(ArrayList& a, int choice)
 	break;
 	case 6:
 	{
+		ArrayList p;
 		int x = 0;
-		std::cin >> x;
-		while (x != 0)
+		int k = 0;
+		std::cin >> k;
+		p.count = k;
+		p.data = new int[k];
+		for (int i = 0; i < k; ++i)
 		{
-			a.add(x);
 			std::cin >> x;
-		};
+			p.data[i] = x;
+		}
+		a.add(p);
+		delete[] p.data;
 	}
 	break;
 	case 7:
 	{
+		ArrayList p;
 		int x = 0;
 		int i = 0;
 		int k = 0;
+		std::cin >> k;
 		std::cin >> i;
-		std::cin >> x;
-		while (x != 0)
+		p.count = k;
+		p.data = new int[k];
+		for (int i = 0; i < k; ++i)
 		{
-			a.add(i + k, x);
-			++k;
 			std::cin >> x;
-		} while (x != 0);
+			p.data[k] = x;
+		} 
+		a.addAll(i, p);
+		delete[] p.data;
 	}
 	break;
 	}

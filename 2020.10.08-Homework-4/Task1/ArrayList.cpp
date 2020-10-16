@@ -64,6 +64,45 @@ bool ArrayList::add(int index, int element)
 	}
 }
 
+bool ArrayList::add(ArrayList& list)
+{
+	for (int i = 0; i < list.count; ++i)
+	{
+		if (count == capacity)
+		{
+			expand(data, capacity);
+		}
+		data[count] = list.data[i];
+		++count;
+	}
+	return true;
+}
+
+bool ArrayList::addAll(int index, ArrayList& list)
+{
+	count += list.count;
+	if (index <= count)
+	{
+		while (count > capacity)
+		{
+			expand(data, capacity);
+		}
+		for (int i = 0; i < list.count; ++i)
+		{
+			data[count - i] = data[count - list.count - i];
+		}
+		for (int i = 0; i < list.count; ++i)
+		{
+			data[index + i] = list.data[i];
+		}
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 void ArrayList::print()
 {
 	printf("[%d/%d]{", count, capacity);

@@ -3,7 +3,8 @@
 
 using namespace std;
 
-struct ArrayList {
+struct ArrayList 
+{
 	int count;
 	int capacity;
 	int* data;
@@ -26,27 +27,12 @@ struct ArrayList {
 	bool addAll(int index, ArrayList& list);
 
 	
-	void clear();
-
-	
-	bool contains(int element);
-
-	
-	int get(int index);
-
-	
 	int indexOf(int element);
-
-	
-	bool isEmpty();
 
 	
 	void print();
 
 	
 	bool remove(int index);
-
-	
-	int swap(int index1, int index2);
 
 };
