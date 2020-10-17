@@ -58,38 +58,35 @@ void processChoice(ArrayList& a, int choice)
 	break;
 	case 6:
 	{
-		ArrayList p;
+		
 		int x = 0;
 		int k = 0;
 		std::cin >> k;
-		p.count = k;
-		p.data = new int[k];
+		ArrayList p(k);
 		for (int i = 0; i < k; ++i)
 		{
 			std::cin >> x;
 			p.data[i] = x;
+			++p.count;
 		}
 		a.add(p);
-		delete[] p.data;
 	}
 	break;
 	case 7:
 	{
-		ArrayList p;
 		int x = 0;
-		int i = 0;
+		int index = 0;
 		int k = 0;
 		std::cin >> k;
-		std::cin >> i;
-		p.count = k;
-		p.data = new int[k];
-		for (int i = 0; i < k; ++i)
+		std::cin >> index;
+		ArrayList p(k);
+		for (int j = 0; j < k; ++j)
 		{
 			std::cin >> x;
-			p.data[k] = x;
+			p.data[j] = x;
+			++p.count;
 		} 
-		a.addAll(i, p);
-		delete[] p.data;
+		a.addAll(index, p);
 	}
 	break;
 	}

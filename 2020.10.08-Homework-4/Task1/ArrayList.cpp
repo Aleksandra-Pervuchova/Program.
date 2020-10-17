@@ -80,21 +80,21 @@ bool ArrayList::add(ArrayList& list)
 
 bool ArrayList::addAll(int index, ArrayList& list)
 {
-	count += list.count;
+	while (count + list.count > capacity)
+	{
+		expand(data, capacity);
+	}
 	if (index <= count)
 	{
-		while (count > capacity)
+		for (int i = count - 1; i >= index; --i)
 		{
-			expand(data, capacity);
-		}
-		for (int i = 0; i < list.count; ++i)
-		{
-			data[count - i] = data[count - list.count - i];
+			data[i + list.count] = data[i];
 		}
 		for (int i = 0; i < list.count; ++i)
 		{
 			data[index + i] = list.data[i];
 		}
+		count += list.count;
 		return true;
 	}
 	else
