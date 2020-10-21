@@ -7,11 +7,7 @@ using namespace std;
 int main()
 {
 	int k = 10;
-	cout << k;
 	ArrayList a;
-	cout << a.get(2);
-	a.add(1);
-	cout << a.get(0);
 	for (int i = 0; i < k; ++i)
 	{
 		a.add(rand() % 90 + 10);

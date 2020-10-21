@@ -11,33 +11,33 @@ void ArrayList::expand()
 	for (int i = 0; i < capacity; ++i)
 	{
 		newData[i] = data[i];
+	}
 		capacity *= 2;
 		delete[] data;
 		data = newData;
-	}
 }
 
 int ArrayList:: numLength(int number)
 {
-	int result = 0;
+	/*int result = 0;
 	if (number >= 0)
-	{
+	{*/
 		int result = 1;
 		while (number > 9)
 		{
 			number /= 10;
 			++result;
 		}
-	}
+	/*}
 	else
 	{
 		int result = 2;
-		while (number < 9)
+		while (number < -9)
 		{
 			number /= 10;
 			++result;
 		}
-	}
+	}*/
 	return result;
 }
 
@@ -49,22 +49,22 @@ void ArrayList::addSymbolToStr(int& index, char symbol)
 
 void ArrayList::addNumberToStr(int& index, int number)
 {
-	int length = numLength(number);
-	for (int i = 0; i < length; ++i)
+	int h = numLength(number);
+	for (int i = 0; i < h; ++i)
 	{
-		int digit = number %= 10;
-		str[index + length - 1 - i] = '0' + digit;
-		digit /= 10;
+		int digit = number % 10;
+		str[index + h - 1 - i] = '0' + digit;
+		number /= 10;
 	}
-	index += length;
+	index += h;
 }
 
 bool ArrayList::add(int element)
 {
-	/*if (count = capacity)
+	if (count == capacity)
 	{
 		expand();
-	}*/
+	}
 	data[count] = element;
 	++count;
 	return true;
@@ -72,7 +72,7 @@ bool ArrayList::add(int element)
 
 bool ArrayList::add(int index, int element)
 {
-	if (count = capacity)
+	if (count == capacity)
 	{
 		expand();
 	}
@@ -136,14 +136,11 @@ bool ArrayList::contains(int element)
 
 int ArrayList::get(int index)
 {
-	if (index <= count)
+	if (index < capacity)
 	{
 		return data[index];
 	}
-	else
-	{
-		return -1;
-	}
+	return -1;
 }
 
 bool ArrayList::set(int index, int element)
@@ -179,11 +176,7 @@ bool ArrayList::isEmpty()
 
 char* ArrayList::toString()
 {
-	int length = 7 + numLength(count) + numLength(capacity) + (count - 1) * 2;
-	for (int i = 0; i < count; ++i)
-	{
-		length += numLength(data[i]);
-	}
+	int length = 7 + numLength(count) + numLength(capacity) + count*2 + ((count - 1) * 2);
 	str = new char[length];
 	int index = 0;
 	addSymbolToStr(index, '[');
