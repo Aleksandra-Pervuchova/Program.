@@ -8,11 +8,11 @@ int main()
 {
 	int k = 10;
 	ArrayList a;
-	for (int i = 0; i < k; ++i)
+	/*for (int i = 0; i < k; ++i)
 	{
 		a.add(rand() % 90 + 10);
 	}
-	cout << a.toString();
+	cout << a.toString();*/
 
 	for (int i = 0; i < k; ++i)
 	{
