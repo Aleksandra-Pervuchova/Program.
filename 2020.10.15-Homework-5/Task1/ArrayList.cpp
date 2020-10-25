@@ -19,9 +19,10 @@ void ArrayList::expand()
 
 int ArrayList::numLength(int number)
 {
-	int result = 1;
+	int result = 0;
 	if (number >= 0)
 	{
+		result = 1;
 		while (number > 9)
 		{
 			number /= 10;
@@ -30,6 +31,7 @@ int ArrayList::numLength(int number)
 	}
 	else
 	{
+		result = 2;
 		while (number < -9)
 		{
 			number /= 10;
@@ -50,11 +52,10 @@ void ArrayList::addNumberToStr(int& index, int number)
 	int h = numLength(number);
 	if (number < 0)
 	{
-		++h;
 		for (int i = 0; i < h - 1; ++i)
 		{
 			int digit = number % 10;
-			str[index + h - 1 - i] = '0' + digit;
+			str[index + h - 1 - i] = '0' - digit;
 			number /= 10;
 		}
 		str[index] = '-';
@@ -68,6 +69,7 @@ void ArrayList::addNumberToStr(int& index, int number)
 			number /= 10;
 		}
 	}
+	index += h;
 }
 
 	bool ArrayList::add(int element)
@@ -192,7 +194,11 @@ void ArrayList::addNumberToStr(int& index, int number)
 			delete[]str;
 			str = nullptr;
 		}
-		int length = 7 + numLength(count) + numLength(capacity) + count * 2 + ((count - 1) * 2);
+		int length = 7 + numLength(count) + numLength(capacity) + ((count - 1) * 2);
+		for (int i = 0; i < count; ++i)
+		{
+			length += numLength(data[i]);
+		}
 		str = new char[length];
 		int index = 0;
 		addSymbolToStr(index, '[');
