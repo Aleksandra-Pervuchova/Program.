@@ -32,22 +32,24 @@ void shift(ArrayList& list,int l)
 	{
 		for (int i = 0; i < l; ++i)
 		{
-			list.set(0, list.get(list.length() - 1));
-			for (int j = list.length() - 1; j > 0; --i)
+			int temp = list.get(list.length() - 1);
+			for (int j = list.length() - 1; j > 0; --j)
 			{
 				list.set(j, list.get(j - 1));
 			}
+			list.set(0, temp);
 		}
 	}
 	else
 	{
 		for (int i = l; i < 0; ++i)
 		{
-			list.set(list.length() - 1, list.get(0));
-			for (int j = 0; j < list.length() - 1; ++i)
+			int temp = list.get(0);
+			for (int j = 0; j < list.length() - 1; ++j)
 			{
 				list.set(j, list.get(j + 1));
 			}
+			list.set(list.length() - 1, temp);
 		}
 	}
 }
