@@ -3,6 +3,7 @@
 ArrayList::~ArrayList()
 {
 	delete[] data;
+	delete[] str;
 }
 
 void ArrayList::expand()
@@ -85,17 +86,24 @@ void ArrayList::addNumberToStr(int& index, int number)
 
 	bool ArrayList::add(int index, int element)
 	{
-		if (count == capacity)
+		if (index > count)
 		{
-			expand();
+			return false;
 		}
-		for (int i = count; i > index; --i)
+		else
 		{
-			data[i] = data[i - 1];
+			if (count == capacity)
+			{
+				expand();
+			}
+			for (int i = count; i > index; --i)
+			{
+				data[i] = data[i - 1];
+			}
+			data[index] = element;
+			++count;
+			return true;
 		}
-		data[index] = element;
-		++count;
-		return true;
 	}
 
 	bool ArrayList::addAll(ArrayList & list)
@@ -114,20 +122,27 @@ void ArrayList::addNumberToStr(int& index, int number)
 
 	bool ArrayList::addAll(int index, ArrayList & list)
 	{
-		while (count + list.count >= capacity)
+		if (index > count)
 		{
-			expand();
+			return false;
 		}
-		for (int i = count - 1; i >= index; --i)
+		else
 		{
-			data[i + list.count] = data[i];
+			while (count + list.count >= capacity)
+			{
+				expand();
+			}
+			for (int i = count - 1; i >= index; --i)
+			{
+				data[i + list.count] = data[i];
+			}
+			for (int i = 0; i < list.count; ++i)
+			{
+				data[i + index] = list.data[i];
+			}
+			count += list.count;
+			return true;
 		}
-		for (int i = 0; i < list.count; ++i)
-		{
-			data[i + index] = list.data[i];
-		}
-		count += list.count;
-		return true;
 	}
 
 	void ArrayList::clear()
@@ -149,7 +164,7 @@ void ArrayList::addNumberToStr(int& index, int number)
 
 	int ArrayList::get(int index)
 	{
-		if (index < capacity)
+		if (index < count)
 		{
 			return data[index];
 		}
@@ -158,7 +173,7 @@ void ArrayList::addNumberToStr(int& index, int number)
 
 	bool ArrayList::set(int index, int element)
 	{
-		if (index < count)
+		if (index <= count)
 		{
 			data[index] = element;
 			return true;
@@ -222,20 +237,34 @@ void ArrayList::addNumberToStr(int& index, int number)
 
 	bool ArrayList::remove(int index)
 	{
-		for (int i = index; i < count - 1; ++i)
+		if (index >= count)
 		{
-			data[i] = data[i + 1];
+			return false;
 		}
-		--count;
-		return true;
+		else
+		{
+			for (int i = index; i < count - 1; ++i)
+			{
+				data[i] = data[i + 1];
+			}
+			--count;
+			return true;
+		}
 	}
 
 	bool ArrayList::swap(int index1, int index2)
 	{
-		int temp = data[index1];
-		data[index1] = data[index2];
-		data[index2] = temp;
-		return true;
+		if ((index1 >= count) & (index2 >= count))
+		{
+			return false;
+		}
+		else
+		{
+			int temp = data[index1];
+			data[index1] = data[index2];
+			data[index2] = temp;
+			return true;
+		}
 	}
 
 	int ArrayList::length()
