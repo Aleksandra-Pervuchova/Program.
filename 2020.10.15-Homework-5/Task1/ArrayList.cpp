@@ -3,7 +3,10 @@
 ArrayList::~ArrayList()
 {
 	delete[] data;
-	delete[] str;
+	if (str != nullptr)
+	{
+		delete[] str;
+	}
 }
 
 void ArrayList::expand()

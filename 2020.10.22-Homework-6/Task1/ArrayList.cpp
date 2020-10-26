@@ -4,14 +4,17 @@
 ArrayList::~ArrayList()
 {
 	delete[] data;
-	delete[] str;
+	if (str != nullptr)
+	{
+		delete[] str;
+	}
 }
 
 ArrayList::ArrayList(const ArrayList& list)
 {
 	count = list.count;
 	capacity = list.capacity;
-	data = list.data;
+	for (int i = 0; i < count; data[i] = list.data[i], ++i);
 	str = nullptr;
 }
 
@@ -123,9 +126,8 @@ bool ArrayList::addAll(ArrayList& list)
 	}
 	for (int i = 0; i < list.count; ++i)
 	{
-		data[count + i] = list.data[i];
+		add(list.get(i));
 	}
-	count += list.count;
 	return true;
 }
 
