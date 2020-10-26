@@ -14,7 +14,7 @@ void printMenu()
 	cout <<"5 - Проверить, может ли массив стать симметричным, если из него удалить один элемент"  << endl;
 }
 
-bool symmetryCheck(ArrayList list)
+bool symmetryCheck(ArrayList& list)
 {
 	for (int i = 0; i < list.length(); ++i)
 	{
@@ -26,7 +26,7 @@ bool symmetryCheck(ArrayList list)
 	}
 }
 
-void shift(ArrayList& list,int l)
+void shift(ArrayList& list, int l)
 {
 	if (l > 0)
 	{
