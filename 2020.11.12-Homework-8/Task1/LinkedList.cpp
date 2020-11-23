@@ -257,21 +257,50 @@ void LinkedList::operator-=(int index)
 
 LinkedList& LinkedList::operator=(LinkedList list)
 {
-	Node* temp1 = head;
+	if (head == nullptr)
+	{
+		Node* node = list.head;
+		for (int i = 0; i < list.count; ++i)
+		{
+			addToTail(node->data);
+			node = node->next;
+		}
+		return *this;
+	}
+	if (count == list.count)
+	{
+		Node* temp = list.head;
+		for (int i = 0; i < count;++i)
+		{
+			set(i, temp->data);
+			temp = temp->next;
+		}
+	}
+	if (count > list.count)
+	{
+		int t = count - list.count;
+		for (int i = 0; i < t; ++i)
+		{
+			extractTail();
+		}
+		Node* temp = list.head;
+		for (int i = 0; i < count; ++i)
+		{
+			set(i, temp->data);
+			temp = temp->next;
+		}
+	}
+	Node* temp = list.head;
 	for (int i = 0; i < count; ++i)
 	{
-		Node* node = temp1;
-		temp1 = temp1->next;
-		delete node;
+		set(i, temp->data);
+		temp = temp->next;
 	}
-	Node* temp2 = list.head;
-	while (temp2 != nullptr)
+	for (int i = count; i < list.count; ++i)
 	{
-		addToTail(temp2->data);
-		temp2 = temp2->next;
+		addToTail(temp->data);
+		temp = temp->next;
 	}
-
-	return *this;
 }
 
 int LinkedList::indexOf(int element)

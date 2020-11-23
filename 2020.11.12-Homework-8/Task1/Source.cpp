@@ -37,24 +37,21 @@ int main()
 	cout << "list2: " << list2 << endl;
 	list2.add(1, 0);
 	cout << "list2: " << list2 << endl;
-	list2.add(3, 0);
-	cout << "list2: " << list2 << endl;
-	list2.set(3, 0);
+	list2[3] = 0;
 	cout << "list2: " << list2 << endl;
 	list2.addToTail(4);
 	cout << "list2: " << list2 << endl;
 	list2.extractHead();
 	cout << "list2: " << list2 << endl;
-	list2.set(0, 9);
+	list2.addToHead(4);
 	cout << "list2: " << list2 << endl;
 	list2.extractTail();
-	cout << "list2: " << list2 << endl;
-	list2.set(4, 9);
 	cout << "list2: " << list2 << endl;
 	list2[2] = 4;
 	cout << "list2: " << list2 << endl;
 	list1 = list2;
 	cout << "list1: " << list1 << endl;
+
 	return 0;
 }
 
