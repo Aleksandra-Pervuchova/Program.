@@ -257,6 +257,7 @@ void LinkedList::operator-=(int index)
 
 LinkedList& LinkedList::operator=(LinkedList list)
 {
+	if (&list == this) return *this;
 	if (head == nullptr)
 	{
 		Node* node = list.head;
@@ -265,7 +266,6 @@ LinkedList& LinkedList::operator=(LinkedList list)
 			addToTail(node->data);
 			node = node->next;
 		}
-		return *this;
 	}
 	if (count == list.count)
 	{
