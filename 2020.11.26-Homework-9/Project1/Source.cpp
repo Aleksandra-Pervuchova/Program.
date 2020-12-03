@@ -162,8 +162,7 @@ int main()
 		resultCode = readDouble(doubleNum);
 		resolveError(resultCode);
 	}
-	double x = intNum * 1.0;
-	double result = x + doubleNum;
+	double result = intNum + doubleNum;
 	cout << "intNum + doubleNum = " << result << endl;
 }
 
