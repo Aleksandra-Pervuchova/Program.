@@ -24,7 +24,6 @@ double myFunction(float x, int n)
 
 int main()
 {
-	setprecision(9);
 	double x = 0;
 	int n = 0;
 	cin >> x >> n;

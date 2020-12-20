@@ -161,6 +161,7 @@ int main()
 	{
 		resultCode = readDouble(doubleNum);
 		resolveError(resultCode);
+
 	}
 	double result = intNum + doubleNum;
 	cout << "intNum + doubleNum = " << result << endl;
